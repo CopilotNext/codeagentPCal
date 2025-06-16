@@ -19,7 +19,8 @@ class CalculatorUI:
             '7', '8', '9', '/',
             '4', '5', '6', '*',
             '1', '2', '3', '-',
-            '0', '.', '=', '+'
+            '0', '.', '=', '+',
+            '^'  # Added power button
         ]
 
         # 创建并放置按钮
@@ -36,10 +37,10 @@ class CalculatorUI:
 
         # 添加清除按钮
         tk.Button(self.window, text='C', width=5, height=2,
-                 command=self.clear).grid(row=5, column=0, columnspan=4, padx=2, pady=2)
+                 command=self.clear).grid(row=6, column=0, columnspan=4, padx=2, pady=2) # Moved C to row 6
 
         # 配置网格权重
-        for i in range(6):
+        for i in range(7): # Adjusted for new row
             self.window.grid_rowconfigure(i, weight=1)
         for i in range(4):
             self.window.grid_columnconfigure(i, weight=1)

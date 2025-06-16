@@ -15,7 +15,7 @@ class CalculatorService:
 
             # 解析表达式
             # 支持形如 "123+456" 的简单表达式
-            match = re.match(r'^([-]?\d*\.?\d+)([\+\-\*\/])([-]?\d*\.?\d+)$', expression)
+            match = re.match(r'^([-]?\d*\.?\d+)([\+\-\*\/^])([-]?\d*\.?\d+)$', expression)
             if not match:
                 return "错误: 格式无效"
 

@@ -17,3 +17,7 @@ class DivideOperation(Operation):
         if y == 0:
             raise ZeroDivisionError("除数不能为0")
         return x / y
+
+class PowerOperation(Operation):
+    def calculate(self, x: float, y: float) -> float:
+        return x ** y

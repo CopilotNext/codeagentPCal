@@ -9,7 +9,8 @@ from operations.basic_operations import (
     AddOperation,
     SubtractOperation,
     MultiplyOperation,
-    DivideOperation
+    DivideOperation,
+    PowerOperation
 )
 
 class TestBasicOperations(unittest.TestCase):
@@ -62,6 +63,58 @@ class TestBasicOperations(unittest.TestCase):
         # 测试除零异常
         with self.assertRaises(ZeroDivisionError):
             self.divide.calculate(5, 0)
+
+class TestPowerOperation(unittest.TestCase):
+    def setUp(self):
+        self.power = PowerOperation()
+
+    def test_positive_integer_powers(self):
+        self.assertEqual(self.power.calculate(2, 3), 8)
+        self.assertEqual(self.power.calculate(5, 2), 25)
+        self.assertEqual(self.power.calculate(1, 100), 1)
+
+    def test_base_zero(self):
+        self.assertEqual(self.power.calculate(0, 5), 0)
+        self.assertEqual(self.power.calculate(0, 1), 0)
+        # 0 to a negative power is DivisionByZero
+        with self.assertRaises(ZeroDivisionError): # 0^-2 is 1/0^2
+            self.power.calculate(0,-2)
+
+
+    def test_exponent_zero(self):
+        self.assertEqual(self.power.calculate(5, 0), 1)
+        self.assertEqual(self.power.calculate(-2, 0), 1)
+        self.assertEqual(self.power.calculate(0.5, 0), 1)
+
+    def test_zero_power_zero(self):
+        # 0^0 is conventionally 1 in many contexts
+        self.assertEqual(self.power.calculate(0, 0), 1)
+
+    def test_negative_base_even_exponent(self):
+        self.assertEqual(self.power.calculate(-2, 2), 4)
+        self.assertEqual(self.power.calculate(-3, 4), 81)
+        self.assertAlmostEqual(self.power.calculate(-2.5, 2), 6.25)
+
+    def test_negative_base_odd_exponent(self):
+        self.assertEqual(self.power.calculate(-2, 3), -8)
+        self.assertEqual(self.power.calculate(-3, 1), -3)
+        self.assertAlmostEqual(self.power.calculate(-2.5, 3), -15.625)
+
+    def test_negative_exponent(self):
+        self.assertAlmostEqual(self.power.calculate(2, -1), 0.5)
+        self.assertAlmostEqual(self.power.calculate(4, -2), 0.0625)
+        self.assertAlmostEqual(self.power.calculate(5, -3), 0.008) # 1/125
+
+    def test_fractional_exponent(self):
+        self.assertAlmostEqual(self.power.calculate(4, 0.5), 2)
+        self.assertAlmostEqual(self.power.calculate(8, 1/3), 2)
+        self.assertAlmostEqual(self.power.calculate(9, 1.5), 27) # 9 * 3
+
+    def test_float_base_and_exponent(self):
+        self.assertAlmostEqual(self.power.calculate(2.5, 1.5), 2.5 * (2.5**0.5)) # approx 3.9528
+        # Example: 2.5 ^ 1.5 = 2.5 * sqrt(2.5) approx 2.5 * 1.58113883 = 3.952847075
+        self.assertAlmostEqual(self.power.calculate(2.5, 1.5), 3.952847075110012)
+
 
 if __name__ == '__main__':
     unittest.main()

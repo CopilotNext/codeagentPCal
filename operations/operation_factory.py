@@ -1,4 +1,4 @@
-from .basic_operations import AddOperation, SubtractOperation, MultiplyOperation, DivideOperation
+from .basic_operations import AddOperation, SubtractOperation, MultiplyOperation, DivideOperation, PowerOperation
 
 class OperationFactory:
     @staticmethod
@@ -7,6 +7,7 @@ class OperationFactory:
             '+': AddOperation(),
             '-': SubtractOperation(),
             '*': MultiplyOperation(),
-            '/': DivideOperation()
+            '/': DivideOperation(),
+            '^': PowerOperation()
         }
         return operations.get(operator)
